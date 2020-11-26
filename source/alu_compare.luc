@@ -1,0 +1,36 @@
+module alu_compare (
+    input alufn[6],
+    input v,
+    input z,
+    input n,
+    output result[16]
+  ) {
+  
+  sig comparison;
+  
+  always {
+    
+    case(alufn[2:1]){
+      
+      b01:
+        //comparison of a == b
+        comparison = z;
+        
+      b10:
+        //comparison of a < b
+        comparison = n^v;     
+               
+      b11:
+        //comparison of a <= b
+        comparison = z|(n^v);
+        
+      default:
+        //you fool! thats not a valid alufn code
+        comparison = b0;
+        
+    }
+    
+    //the result is stored to the LSB (after 15 bits of 0's)
+    result = c{15b0, comparison};
+  }
+}

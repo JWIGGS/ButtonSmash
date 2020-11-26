@@ -1,0 +1,47 @@
+module alu_adder (
+    input alufn[6],
+    input a[16],  
+    input b[16],
+    output result[16],
+    output z,
+    output v,
+    output n
+  ) {
+  
+  //sum temp is a temporary signal to store the sum to be used for z, v, and n
+  sig sum[16];
+  
+  //sb will be used to calculate the overflow
+  sig xb;
+  
+  always {
+    
+    case(alufn[0]){
+      b1:
+        //subtract operation
+        sum = a-b; 
+        
+      default:
+        //addition operation
+        sum = a+b;
+        
+    }
+    
+    result = sum;
+    
+    //z is true when all outputs are zero 
+    //z is true when the inputs are equal to the outputs using the subtraction operation
+    z = ~|sum;
+    
+    //v is true when the addition operation overflows
+    //xb is inverted in the subtraction operation
+    xb = b[15] ^ alufn[0];
+    v = ((a[15] & xb & ~sum[15]) | (~a[15] & ~xb & sum[15]));  
+    
+    //n is true when the sum is negative when the MSB is 1
+    n = sum[15];
+    
+    
+    
+  }
+}

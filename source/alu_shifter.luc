@@ -1,0 +1,48 @@
+module alu_shifter (
+    input a[16],
+    input b[16],
+    input alufn[6],
+    output result[16]
+  ) 
+{
+  
+  //the multiplication function uses the same 
+  alu_multiply function_multiply;
+  
+  sig shift_amount[4];
+
+
+  always {
+    
+    //since we have a 16 bit alu, we are only going to multiply the first 8 bits of a and b to get our 16 bit output
+    function_multiply.a = a[7:0];
+    function_multiply.b = b[7:0];
+    
+    //the actual number of bits we are going to shift by is the value of b
+    //since shifting more than 16 bits would be redundant, we only need to look at the first 4 bits of b
+    shift_amount = b[3:0];
+    
+    case(alufn[1:0]){
+      b00:
+        //left shift operation
+        result = a << shift_amount;
+        
+      b01:
+        //right shift operation
+        result = a >> shift_amount;
+        
+      b11:
+        //right shift with wign extension
+        result = $signed(a) >>> shift_amount;
+      
+      b10:
+        //hijack this unused shift code to route to the multiply function instead
+        result = function_multiply.result;
+        
+      default:
+        //you fool! thats not a valid alufn code
+        result = a; 
+               
+    }
+  }
+}

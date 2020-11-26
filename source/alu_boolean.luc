@@ -1,0 +1,31 @@
+module alu_boolean (
+    input alufn[6],              
+    input a[16],
+    input b[16],
+    output result[16]
+  ) {
+  
+
+  always {
+
+    case (alufn[3:0]){
+      b1000:
+        //bitwise and operation
+        result = a & b;
+      b1110:
+        //bitwise or operation
+        result = a | b;
+      b0110:
+        //bitwise xor operation
+        result = a ^ b;
+      b1010:
+        // "just give me the value of a" operation
+        result = a;
+      default:
+        //you fool! thats not a valid alufn code
+        result = 16b0;
+      
+    }
+    
+  }
+}

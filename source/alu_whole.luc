@@ -1,0 +1,76 @@
+module alu_whole (
+    input alufn[6],
+    input a[16],
+    input b[16],
+
+    output result[16],
+    output z,
+    output v,
+    output n
+  ) {
+  
+  //instantiate modules for each function
+  alu_adder function_addition;
+  alu_boolean function_boolean;
+  alu_shifter function_shifter;
+  alu_compare function_compare;
+ 
+  
+  
+  always {
+  
+    //addition function inputs
+    function_addition.a = a;
+    function_addition.b = b;
+    function_addition.alufn = alufn;
+    
+    //addition function outputs
+    z = function_addition.z;
+    v = function_addition.v;
+    n = function_addition.n;
+    
+    //boolean function inputs
+    function_boolean.a = a;
+    function_boolean.b = b;
+    function_boolean.alufn = alufn;
+    
+    //shifter function inputs
+    function_shifter.a = a;
+    function_shifter.b = b;
+    function_shifter.alufn = alufn;
+    
+    //compare function inputs
+    function_compare.z = function_addition.z;
+    function_compare.v = function_addition.v;
+    function_compare.n = function_addition.n;
+    function_compare.alufn = alufn;
+    
+    
+    
+    //function outputs
+    case(alufn[5:4]){
+      b00:
+        //addition function output
+        result = function_addition.result;
+        
+      b01:
+        //boolean function output
+        result = function_boolean.result;
+        
+      b10:
+        //shifter and multiplication function output
+        result = function_shifter.result;
+        
+      b11:
+        //comparator function output
+        result = function_compare.result;
+        
+      default:
+        //you fool! thats not a valid alufn code
+        result = 15b0;
+  }
+    
+    
+
+  }
+}

@@ -1,0 +1,41 @@
+module alu_multiply (
+    input a[8],
+    input b[8],
+    output result[16]
+  ) {
+  
+  sig p0[16];
+  sig p1[16];
+  sig p2[16];
+  sig p3[16];
+  sig p4[16];
+  sig p5[16];
+  sig p6[16];
+  sig p7[16];
+  
+  always {
+   
+   //multiplication function is based on partial products for binary base by shifting bits
+   p0[7:0] = (8x{a[0]}) & (b[7:0]);         
+   p1[8:1] = ((8x{a[1]}) & (b[7:0]));
+   p2[9:2] = ((8x{a[2]}) & (b[7:0]));
+   p3[10:3] = ((8x{a[3]}) & (b[7:0]));
+   p4[11:4] = ((8x{a[4]}) & (b[7:0]));
+   p5[12:5] = ((8x{a[5]}) & (b[7:0]));
+   p6[13:6] = ((8x{a[6]}) & (b[7:0]));
+   p7[14:7] = ((8x{a[7]}) & (b[7:0]));
+   
+   p0[15:8] = 8b0;
+   p1[15:9] = 7b0;
+   p2[15:10] = 6b0;
+   p3[15:11] = 5b0;
+   p4[15:12] = 4b0;
+   p5[15:13] = 3b0;
+   p6[15:14] = 2b0;
+   p7[15] = b0;
+   
+   result = p0 + p1 + p2 + p3 + p4 + p5 + p6 + p7;
+   
+   
+  }
+}
