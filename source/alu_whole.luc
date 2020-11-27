@@ -2,11 +2,7 @@ module alu_whole (
     input alufn[6],
     input a[16],
     input b[16],
-
-    output result[16],
-    output z,
-    output v,
-    output n
+    output result[16]
   ) {
   
   //instantiate modules for each function
@@ -14,20 +10,13 @@ module alu_whole (
   alu_boolean function_boolean;
   alu_shifter function_shifter;
   alu_compare function_compare;
- 
-  
-  
+
   always {
   
     //addition function inputs
     function_addition.a = a;
     function_addition.b = b;
     function_addition.alufn = alufn;
-    
-    //addition function outputs
-    z = function_addition.z;
-    v = function_addition.v;
-    n = function_addition.n;
     
     //boolean function inputs
     function_boolean.a = a;

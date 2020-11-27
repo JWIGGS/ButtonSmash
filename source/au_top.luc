@@ -8,8 +8,11 @@ module au_top (
     output io_seg [8],      // 7-segment LEDs on IO Shield
     output io_sel [4],      // Digit select on IO Shield
     input io_button [5],    // 5 buttons on IO Shield
-    input io_dip [3][8]    // DIP switches on IO Shield
-
+    input io_dip [3][8],    // DIP switches on IO Shield
+    output ledPlayer[4][7],
+    output ledSequence[2][8],
+    input buttonPlayer[4][2],
+    input buttonControl[2]
   ) {
 
   // reset signal
@@ -20,6 +23,8 @@ module au_top (
     // clock. This ensures the entire FPGA comes out of reset at the same time.
     reset_conditioner reset_cond;
   }
+  
+  counter cnt(#SIZE(7), #DIV(24), .clk(clk), .rst(rst));
     
   
   always {
@@ -39,8 +44,14 @@ module au_top (
     // turn everything off
     led = 8h00;
     io_led = 3x{{8h00}};
-    io_seg = 8hFF;
-    io_sel = b1111;
+    io_seg = 8hff;
+    io_sel = 4hf;
+    
+    ledPlayer = 4x{{7b0}};
+    ledSequence = 2x{{8b0}};
+    
+    
+    ledPlayer[0] = cnt.value;
     
     
 
