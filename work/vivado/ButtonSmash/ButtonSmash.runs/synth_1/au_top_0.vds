@@ -1,0 +1,292 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Thu Dec  3 04:32:13 2020
+# Process ID: 27944
+# Current directory: C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.runs/synth_1
+# Command line: vivado.exe -log au_top_0.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source au_top_0.tcl
+# Log file: C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.runs/synth_1/au_top_0.vds
+# Journal file: C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source au_top_0.tcl -notrace
+Command: synth_design -top au_top_0 -part xc7a35tftg256-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Device 21-403] Loading part xc7a35tftg256-1
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 43156
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 999.227 ; gain = 0.000
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'au_top_0' [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/au_top_0.v:7]
+INFO: [Synth 8-6157] synthesizing module 'reset_conditioner_1' [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/reset_conditioner_1.v:11]
+	Parameter STAGES bound to: 3'b100 
+INFO: [Synth 8-6155] done synthesizing module 'reset_conditioner_1' (1#1) [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/reset_conditioner_1.v:11]
+INFO: [Synth 8-6157] synthesizing module 'button_manager_2' [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/button_manager_2.v:7]
+INFO: [Synth 8-6157] synthesizing module 'button_conditioner_6' [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/button_conditioner_6.v:13]
+	Parameter CLK_FREQ bound to: 26'b10111110101111000010000000 
+	Parameter MIN_DELAY bound to: 6'b110010 
+	Parameter NUM_SYNC bound to: 2'b10 
+INFO: [Synth 8-6157] synthesizing module 'pipeline_12' [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/pipeline_12.v:11]
+	Parameter DEPTH bound to: 2'b10 
+INFO: [Synth 8-6155] done synthesizing module 'pipeline_12' (2#1) [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/pipeline_12.v:11]
+INFO: [Synth 8-6155] done synthesizing module 'button_conditioner_6' (3#1) [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/button_conditioner_6.v:13]
+INFO: [Synth 8-6155] done synthesizing module 'button_manager_2' (4#1) [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/button_manager_2.v:7]
+INFO: [Synth 8-6157] synthesizing module 'control_unit_3' [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/control_unit_3.v:7]
+INFO: [Synth 8-6157] synthesizing module 'pn_gen_7' [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/pn_gen_7.v:11]
+	Parameter SEED bound to: 128'b10000100001100100011001101010010001110100110000100111001011001100100001000111011011000100010010101100010010110010010110001100010 
+INFO: [Synth 8-6155] done synthesizing module 'pn_gen_7' (5#1) [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/pn_gen_7.v:11]
+INFO: [Synth 8-155] case statement is not full and has no default [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/control_unit_3.v:60]
+INFO: [Synth 8-6155] done synthesizing module 'control_unit_3' (6#1) [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/control_unit_3.v:7]
+INFO: [Synth 8-6157] synthesizing module 'alu_whole_4' [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/alu_whole_4.v:7]
+INFO: [Synth 8-6157] synthesizing module 'alu_adder_8' [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/alu_adder_8.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'alu_adder_8' (7#1) [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/alu_adder_8.v:7]
+INFO: [Synth 8-6157] synthesizing module 'alu_boolean_9' [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/alu_boolean_9.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'alu_boolean_9' (8#1) [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/alu_boolean_9.v:7]
+INFO: [Synth 8-6157] synthesizing module 'alu_shifter_10' [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/alu_shifter_10.v:7]
+INFO: [Synth 8-6157] synthesizing module 'alu_multiply_13' [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/alu_multiply_13.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'alu_multiply_13' (9#1) [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/alu_multiply_13.v:7]
+INFO: [Synth 8-226] default block is never used [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/alu_shifter_10.v:32]
+INFO: [Synth 8-6155] done synthesizing module 'alu_shifter_10' (10#1) [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/alu_shifter_10.v:7]
+INFO: [Synth 8-6157] synthesizing module 'alu_compare_11' [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/alu_compare_11.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'alu_compare_11' (11#1) [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/alu_compare_11.v:7]
+INFO: [Synth 8-226] default block is never used [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/alu_whole_4.v:83]
+INFO: [Synth 8-6155] done synthesizing module 'alu_whole_4' (12#1) [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/alu_whole_4.v:7]
+INFO: [Synth 8-6157] synthesizing module 'segment_manager_5' [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/segment_manager_5.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'segment_manager_5' (13#1) [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/segment_manager_5.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'au_top_0' (14#1) [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.srcs/sources_1/imports/verilog/au_top_0.v:7]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 999.227 ; gain = 0.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 999.227 ; gain = 0.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 999.227 ; gain = 0.000
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.080 . Memory (MB): peak = 999.227 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [C:/Users/Harshit Garg/Downloads/ButtonSmash/constraint/constraints.xdc]
+Finished Parsing XDC File [C:/Users/Harshit Garg/Downloads/ButtonSmash/constraint/constraints.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/Users/Harshit Garg/Downloads/ButtonSmash/constraint/constraints.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/au_top_0_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/au_top_0_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Parsing XDC File [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/constraint/custom.xdc]
+Finished Parsing XDC File [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/constraint/custom.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/Users/Harshit Garg/Downloads/ButtonSmash/work/constraint/custom.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/au_top_0_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/au_top_0_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 999.227 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.011 . Memory (MB): peak = 999.227 ; gain = 0.000
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 999.227 ; gain = 0.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a35tftg256-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 999.227 ; gain = 0.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 999.227 ; gain = 0.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 999.227 ; gain = 0.000
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input   27 Bit       Adders := 1     
+	   2 Input   17 Bit       Adders := 1     
+	   2 Input   16 Bit       Adders := 2     
+	   3 Input   16 Bit       Adders := 1     
+	   8 Input   16 Bit       Adders := 1     
+	   2 Input    4 Bit       Adders := 3     
++---XORs : 
+	   2 Input     32 Bit         XORs := 2     
+	   4 Input     32 Bit         XORs := 1     
+	   2 Input     16 Bit         XORs := 1     
+	   2 Input      1 Bit         XORs := 2     
++---Registers : 
+	               32 Bit    Registers := 4     
+	               27 Bit    Registers := 1     
+	                6 Bit    Registers := 2     
+	                4 Bit    Registers := 1     
+	                2 Bit    Registers := 6     
++---Muxes : 
+	   2 Input  256 Bit        Muxes := 11    
+	  16 Input  256 Bit        Muxes := 1     
+	   2 Input   65 Bit        Muxes := 1     
+	   2 Input   48 Bit        Muxes := 1     
+	   3 Input   48 Bit        Muxes := 1     
+	   2 Input   32 Bit        Muxes := 2     
+	   2 Input   27 Bit        Muxes := 1     
+	  16 Input   27 Bit        Muxes := 1     
+	   2 Input   16 Bit        Muxes := 4     
+	  16 Input   16 Bit        Muxes := 2     
+	   4 Input   16 Bit        Muxes := 2     
+	   2 Input    6 Bit        Muxes := 6     
+	  16 Input    6 Bit        Muxes := 1     
+	   5 Input    6 Bit        Muxes := 1     
+	   2 Input    5 Bit        Muxes := 1     
+	  16 Input    4 Bit        Muxes := 3     
+	   2 Input    4 Bit        Muxes := 6     
+	 256 Input    4 Bit        Muxes := 2     
+	  16 Input    3 Bit        Muxes := 1     
+	   2 Input    2 Bit        Muxes := 1     
+	  16 Input    2 Bit        Muxes := 1     
+	   2 Input    1 Bit        Muxes := 10    
+	  16 Input    1 Bit        Muxes := 2     
+	   4 Input    1 Bit        Muxes := 1     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 90 (col length:60)
+BRAMs: 100 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:27 ; elapsed = 00:00:28 . Memory (MB): peak = 1060.562 ; gain = 61.336
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:33 ; elapsed = 00:00:34 . Memory (MB): peak = 1060.562 ; gain = 61.336
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:46 ; elapsed = 00:00:47 . Memory (MB): peak = 1228.180 ; gain = 228.953
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:48 ; elapsed = 00:00:49 . Memory (MB): peak = 1246.363 ; gain = 247.137
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:52 ; elapsed = 00:00:53 . Memory (MB): peak = 1246.363 ; gain = 247.137
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:52 ; elapsed = 00:00:53 . Memory (MB): peak = 1246.363 ; gain = 247.137
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:52 ; elapsed = 00:00:53 . Memory (MB): peak = 1246.363 ; gain = 247.137
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:52 ; elapsed = 00:00:53 . Memory (MB): peak = 1246.363 ; gain = 247.137
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:53 ; elapsed = 00:00:54 . Memory (MB): peak = 1246.363 ; gain = 247.137
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:53 ; elapsed = 00:00:54 . Memory (MB): peak = 1246.363 ; gain = 247.137
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+-------+------+
+|      |Cell   |Count |
++------+-------+------+
+|1     |BUFG   |     1|
+|2     |CARRY4 |    78|
+|3     |LUT1   |    47|
+|4     |LUT2   |   265|
+|5     |LUT3   |    70|
+|6     |LUT4   |   194|
+|7     |LUT5   |   326|
+|8     |LUT6   |  1198|
+|9     |FDRE   |   497|
+|10    |FDSE   |    79|
+|11    |IBUF   |     9|
+|12    |OBUF   |    53|
++------+-------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:53 ; elapsed = 00:00:54 . Memory (MB): peak = 1246.363 ; gain = 247.137
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:44 ; elapsed = 00:00:51 . Memory (MB): peak = 1246.363 ; gain = 247.137
+Synthesis Optimization Complete : Time (s): cpu = 00:00:53 ; elapsed = 00:00:54 . Memory (MB): peak = 1246.363 ; gain = 247.137
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.031 . Memory (MB): peak = 1246.363 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 78 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1246.363 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Common 17-83] Releasing license: Synthesis
+47 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:01:00 ; elapsed = 00:01:01 . Memory (MB): peak = 1246.363 ; gain = 247.137
+INFO: [Common 17-1381] The checkpoint 'C:/Users/Harshit Garg/Downloads/ButtonSmash/work/vivado/ButtonSmash/ButtonSmash.runs/synth_1/au_top_0.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file au_top_0_utilization_synth.rpt -pb au_top_0_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Thu Dec  3 04:33:16 2020...

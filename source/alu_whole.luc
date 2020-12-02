@@ -1,3 +1,19 @@
+global ALUFunction{
+  const ADD = 6b000000;
+  const SUB = 6b000001;
+  const AND = 6b011000;
+  const OR = 6b011110;
+  const XOR = 6b010110;
+  const LDR = 6b011010;
+  const SHL = 6b100000;
+  const SHR = 6b100001;
+  const SRA = 6b100011;
+  const MUL = 6b100010;
+  const CMPEQ = 6b110011;
+  const CMPLT = 6b110101;
+  const CMPLE = 6b110111;
+}
+
 module alu_whole (
     input alufn[6],
     input a[16],

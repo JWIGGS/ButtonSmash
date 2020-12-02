@@ -1,0 +1,60 @@
+global Button{
+  const P1_LEFT         = 0;
+  const P2_LEFT         = 1;
+  const P1_RIGHT        = 2;
+  const P2_RIGHT        = 3;
+  const CONTROL_LEFT    = 4;
+  const CONTROL_RIGHT   = 5;
+  
+}
+
+
+module button_manager (
+    input clk,  // clock
+    input rst,  // reset
+    input buttonRaw[6],
+    input buttonSeen[6],
+    output buttonPressedOut[6]
+  ) {
+  
+  
+  
+  dff buttonPressed[6](.clk(clk), .rst(rst));
+  dff buttonReady[6](.clk(clk), .rst(rst));
+  
+  button_conditioner cond[6](.clk(clk), #MIN_DELAY(50));
+  
+  var i;
+  
+
+  always {
+    
+
+    cond.in = buttonRaw;
+
+    
+    for (i = 0; i < 6; i++){
+      if(cond.out[i]){
+        if(buttonReady.q[i]){
+          buttonReady.d[i] = 0;
+          buttonPressed.d[i] = 1;
+        }
+
+      }
+      else{
+        buttonReady.d[i] = 1;
+        buttonPressed.d[i] = 0;
+      }
+      
+      if(buttonSeen[i]){
+        buttonPressed.d[i] = 0;
+      }
+      
+    }
+    
+    buttonPressedOut = buttonPressed.q;
+    
+    
+    
+  }
+}

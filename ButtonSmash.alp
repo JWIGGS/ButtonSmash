@@ -2,16 +2,20 @@
 <project name="ButtonSmash" board="Alchitry Au" language="Lucid" version="3">
   <files>
     <src top="true">au_top.luc</src>
-    <src>regfile.luc</src>
     <src>alu_adder.luc</src>
-    <src>game_states.luc</src>
+    <component>pipeline.luc</component>
     <component>counter.luc</component>
     <src>alu_whole.luc</src>
-    <src>alu_boolean.luc</src>
+    <src>control_unit.luc</src>
     <src>alu_compare.luc</src>
+    <component>decoder.luc</component>
+    <src>button_manager.luc</src>
+    <src>segment_manager.luc</src>
+    <component>pn_gen.luc</component>
+    <src>alu_boolean.luc</src>
     <src>alu_shifter.luc</src>
     <component>reset_conditioner.luc</component>
-    <component>decoder.luc</component>
+    <component>button_conditioner.luc</component>
     <src>alu_multiply.luc</src>
     <constraint>custom.acf</constraint>
     <constraint>constraints.xdc</constraint>

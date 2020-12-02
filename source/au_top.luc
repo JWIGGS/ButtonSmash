@@ -4,15 +4,11 @@ module au_top (
     output led [8],         // 8 user controllable LEDs
     input usb_rx,           // USB->Serial input
     output usb_tx,          // USB->Serial output
-    output io_led [3][8],   // LEDs on IO Shield
-    output io_seg [8],      // 7-segment LEDs on IO Shield
-    output io_sel [4],      // Digit select on IO Shield
-    input io_button [5],    // 5 buttons on IO Shield
-    input io_dip [3][8],    // DIP switches on IO Shield
-    output ledPlayer[4][7],
+    output ledPlayerScore[2][7],
+    output ledPlayerSize[2][3],
     output ledSequence[2][8],
-    input buttonPlayer[4][2],
-    input buttonControl[2]
+    output ledSegment[8],
+    input button[6]
   ) {
 
   // reset signal
@@ -24,8 +20,12 @@ module au_top (
     reset_conditioner reset_cond;
   }
   
-  counter cnt(#SIZE(7), #DIV(24), .clk(clk), .rst(rst));
-    
+  button_manager module_buttons(.clk(clk), .rst(rst));
+  control_unit module_control(.clk(clk), .rst(rst));
+  alu_whole module_alu;
+  segment_manager module_segment;
+
+  sig regfile[16][16];
   
   always {
   
@@ -40,22 +40,40 @@ module au_top (
 
     // loop serial port
     usb_tx = usb_rx;
-
-    // turn everything off
+      
+    // turn on board led off
     led = 8h00;
-    io_led = 3x{{8h00}};
-    io_seg = 8hff;
-    io_sel = 4hf;
     
-    ledPlayer = 4x{{7b0}};
-    ledSequence = 2x{{8b0}};
+    //alu inputs
+    module_alu.alufn = module_control.alufn;
+    module_alu.a = module_control.a;
+    module_alu.b = module_control.b;
     
+    //control inputs
+    module_control.wd = module_alu.result;
+    module_control.buttonPressed = module_buttons.buttonPressedOut;
     
-    ledPlayer[0] = cnt.value;
+    //sneaky control output to regfile signal
+    regfile = module_control.regfileRead;
     
+    //button inputs
+    module_buttons.buttonRaw = button;
+    module_buttons.buttonSeen = module_control.buttonSeenOut;
     
-
-
+    //led outputs
+    ledPlayerScore[0] = regfile[Register.P1_SCORE][6:0];
+    ledPlayerScore[1] = regfile[Register.P2_SCORE][6:0];  
+    
+    ledPlayerSize[0] = regfile[Register.P1_SIZE][2:0];
+    ledPlayerSize[1] = regfile[Register.P2_SIZE][2:0];
+    
+    ledSequence[0] = regfile[Register.CHECK_LEFT][7:0];
+    ledSequence[1] = regfile[Register.CHECK_RIGHT][7:0];
+    
+    //segment manager
+    module_segment.regfileCountdown = regfile[Register.COUNTDOWN];
+    ledSegment = module_segment.ledSegment;
+    
 
 
   }

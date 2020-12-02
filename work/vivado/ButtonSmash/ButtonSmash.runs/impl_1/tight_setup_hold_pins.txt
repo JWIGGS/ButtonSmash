@@ -1,0 +1,20 @@
++--------------------------+--------------------------+----------------------------------------------------------------------------------------------------------+
+|       Launch Clock       |      Capture Clock       |                                                 Pin                                                      |
++--------------------------+--------------------------+----------------------------------------------------------------------------------------------------------+
+|                    clk_0 |                    clk_0 |                                                                     module_control/M_regfile_q_reg[224]/D|
+|                    clk_0 |                    clk_0 |                                                                     module_control/M_regfile_q_reg[201]/D|
+|                    clk_0 |                    clk_0 |                                                                     module_control/M_regfile_q_reg[192]/D|
+|                    clk_0 |                    clk_0 |                                                                     module_control/M_regfile_q_reg[238]/D|
+|                    clk_0 |                    clk_0 |                                                                     module_control/M_regfile_q_reg[237]/D|
+|                    clk_0 |                    clk_0 |                                                                     module_control/M_regfile_q_reg[106]/D|
+|                    clk_0 |                    clk_0 |                                                                     module_control/M_regfile_q_reg[125]/D|
+|                    clk_0 |                    clk_0 |                                                                      module_control/M_regfile_q_reg[96]/D|
+|                    clk_0 |                    clk_0 |                                                                     module_control/M_regfile_q_reg[184]/D|
+|                    clk_0 |                    clk_0 |                                                                     module_control/M_regfile_q_reg[123]/D|
+|                    clk_0 |                    clk_0 |                                                                     module_control/M_regfile_q_reg[101]/D|
+|                    clk_0 |                    clk_0 |                                                                     module_control/M_regfile_q_reg[115]/D|
+|                    clk_0 |                    clk_0 |                                                                      module_control/M_regfile_q_reg[64]/D|
+|                    clk_0 |                    clk_0 |                                                                     module_control/M_regfile_q_reg[126]/D|
+|                    clk_0 |                    clk_0 |                                                                     module_control/M_regfile_q_reg[179]/D|
+|                    clk_0 |                    clk_0 |                                                                     module_control/M_regfile_q_reg[253]/D|
++--------------------------+--------------------------+----------------------------------------------------------------------------------------------------------+

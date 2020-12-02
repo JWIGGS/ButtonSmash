@@ -1,0 +1,37 @@
+module segment_manager (
+    input regfileCountdown[16],
+    output ledSegment[8]
+  ) {
+
+  always {
+    
+    case(regfileCountdown[15:12]){
+    
+      default:
+        ledSegment = 8b01000000;
+      0:
+        ledSegment = 8b00111111;
+      1:
+        ledSegment = 8b00000110;
+      2:
+        ledSegment = 8b01011011;
+      3:
+        ledSegment = 8b01001111;
+      4:
+        ledSegment = 8b01100110;
+      5:
+        ledSegment = 8b01101101;
+      6:
+        ledSegment = 8b01111101;
+      7:
+        ledSegment = 8b00000111;
+      8:
+        ledSegment = 8b01111111;
+      9:
+        ledSegment = 8b01101111;
+      
+    }
+
+    
+  }
+}

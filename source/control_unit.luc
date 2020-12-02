@@ -1,0 +1,446 @@
+global Register{
+  const STATE                = 0;
+  const ALU_OUTPUT           = 1;
+  const COUNTDOWN            = 2;
+  const COUNTDOWN_MAX        = 3;
+  const PLAYER_SELECT        = 4;
+  const P1_SCORE             = 5;
+  const P2_SCORE             = 6;
+  const P1_LEFT              = 7;
+  const P2_LEFT              = 8;
+  const P1_RIGHT             = 9;
+  const P2_RIGHT             = 10;
+  const P1_SIZE              = 11;
+  const P2_SIZE              = 12;
+  const CHECK_LEFT           = 13;
+  const CHECK_RIGHT          = 14;
+  const CHECK_SIZE           = 15;
+}
+
+global State{
+
+  const GAME_SETUP                     = 0;
+  const IDLE                           = 1;
+  const COUNTDOWN                      = 2;
+  
+  const GAME_LOOP_START                = 3;
+  const CHECK_PLAYER_BUTTON_LEFT       = 4;
+  const CHECK_PLAYER_BUTTON_RIGHT      = 5;
+
+  const ALU_SEND_CHECK_PLAYER_SIZE     = 6;
+  const CHECK_PLAYER_SIZE              = 7;
+  const ALU_SEND_CHECK_PLAYER_LEFT     = 8;
+  const CHECK_PLAYER_LEFT              = 9;
+  
+  const ALU_SEND_PLAYER_SCORE_BSL      = 10;
+  const ALU_SEND_PLAYER_SCORE_INCREMENT= 11;
+  const CHECK_SCORE_MAX                = 12;
+  
+  const END_SCREEN_START               = 13;
+  const END_SCREEN_PAUSE               = 14;
+  const END_SCREEN_FLIP                = 15;
+
+}
+
+
+
+global Bsel{
+  const ZERO   = 2b00;
+  const ONE    = 2b01;
+  const B      = 2b10;
+  const FULL   = 2b11;
+}
+
+module control_unit (
+    input clk,  // clock
+    input rst,  // reset
+    input wd[16],
+    input buttonPressed[6],
+    
+    output alufn[6],
+    output a[16],
+    output b[16],
+    output buttonSeenOut[6],
+    output regfileRead[16][16]
+  ) {
+  
+  sig we;
+  sig ra[4];
+  sig rb[4];
+  sig rc[4];
+  sig bsel[2];
+  
+  pn_gen prng(.clk(clk), .rst(rst));
+  dff delay[27](.clk(clk), .rst(rst));
+  
+  
+  dff regfile[16][16](.clk(clk), .rst(rst),
+    #INIT({
+      16d8,  //R15 - CHECK SIZE (8)
+      16b0, //R14
+      16b0, //R13
+      16b0, //R12 
+      16b0, //R11 
+      16b0, //R10 
+      16b0, //R9 
+      16b0, //R8 
+      16b0, //R7 
+      16b0, //R6 
+      16b0, //R5
+      16b0, //R4 
+      16b1001111111111111, //R3 - COUNTDOWN MAX
+      16b0, //R2 
+      16b0, //R1 
+      16b0 //R0  
+    }));
+
+  
+  
+  
+  always {
+    
+    //default values
+    alufn = 6b0;
+    ra = 4b0;
+    rb = 4b0;
+    rc = Register.ALU_OUTPUT;
+    we = 0;    
+    bsel = 2b0;
+    buttonSeenOut = 6b0;
+    
+    //prng values
+    prng.next = 1; //continuously generate new seeds
+    prng.seed = 32b11111010110000001101011101110101; //totally random initial seeding value
+    
+    
+    //states
+    case(regfile.q[Register.STATE]){
+      
+      
+      State.GAME_SETUP:
+        
+        //clear all p1 registers
+        regfile.d[Register.P1_LEFT] = 16b0;
+        regfile.d[Register.P1_RIGHT] = 16b0;
+        regfile.d[Register.P1_SCORE] = 16b0;
+        regfile.d[Register.P1_SIZE] = 16b0;
+        
+        //clear all p2 registers
+        regfile.d[Register.P2_LEFT] = 16b0;
+        regfile.d[Register.P2_RIGHT] = 16b0;
+        regfile.d[Register.P2_SCORE] = 16b0;
+        regfile.d[Register.P2_SIZE] = 16b0;
+        
+        //reset other things
+        regfile.d[Register.COUNTDOWN] = 16b0;
+        
+        //generate a random sequence
+        regfile.d[Register.CHECK_LEFT] = prng.num[7:0];
+        regfile.d[Register.CHECK_RIGHT] = ~prng.num[7:0];
+        
+        
+        //next state
+        regfile.d[Register.STATE] = State.IDLE;
+        
+      
+      //wait state
+      State.IDLE:
+      
+        //ready button
+        if(buttonPressed[Button.CONTROL_LEFT]){
+          buttonSeenOut[Button.CONTROL_LEFT] = 1;
+          
+          //next state
+          regfile.d[Register.STATE] = State.COUNTDOWN;
+          
+          //start the countdown
+          //this value has been chosen because the top 4 bits are the countodwn actual value, in this case, starting from 9
+          //1001111111111111
+          regfile.d[Register.COUNTDOWN] = regfile.q[Register.COUNTDOWN_MAX];
+          
+        }
+        
+        //generate a new random sequence
+        if(buttonPressed[Button.CONTROL_RIGHT]){
+          buttonSeenOut[Button.CONTROL_RIGHT] = 1;
+          
+          regfile.d[Register.CHECK_LEFT] = prng.num[7:0];
+          regfile.d[Register.CHECK_RIGHT] = ~prng.num[7:0];
+        }
+        
+        
+        
+      //start countdown
+      State.COUNTDOWN:
+      
+        //check if the reset button is pressed
+        if(buttonPressed[Button.CONTROL_RIGHT]){
+          buttonSeenOut[Button.CONTROL_RIGHT] = 1;
+          //end game
+          regfile.d[Register.STATE] = State.GAME_SETUP;
+          
+        }
+        else{
+          //if the countdown is 0 then go to next state
+          if(regfile.q[Register.COUNTDOWN] == 16b0){
+            regfile.d[Register.STATE] = State.GAME_LOOP_START;
+          }
+          else{
+            //decrement the countdown
+            regfile.d[Register.COUNTDOWN] = regfile.q[Register.COUNTDOWN]-1;
+          } 
+        }
+        
+        
+        
+        
+      //the beginning of the game loop
+      State.GAME_LOOP_START:
+        
+        
+        //check if the reset button is pressed
+        if(buttonPressed[Button.CONTROL_RIGHT]){
+          buttonSeenOut[Button.CONTROL_RIGHT] = 1;
+          //end game
+          regfile.d[Register.STATE] = State.GAME_SETUP;
+          
+        }
+        else{
+          //switch player select
+          regfile.d[Register.PLAYER_SELECT][0] = ~regfile.q[Register.PLAYER_SELECT][0];
+          
+          //next state
+          regfile.d[Register.STATE] = State.CHECK_PLAYER_BUTTON_LEFT;
+        }
+        
+        
+        
+      //check player left button press
+      State.CHECK_PLAYER_BUTTON_LEFT:
+        
+        if(buttonPressed[Button.P1_LEFT + regfile.q[Register.PLAYER_SELECT]]){
+          buttonSeenOut[Button.P1_LEFT + regfile.q[Register.PLAYER_SELECT]] = 1;
+          
+          //set the value in the player left sequence at the player sequence size to 1
+          regfile.d[Register.P1_LEFT + regfile.q[Register.PLAYER_SELECT]][regfile.q[Register.P1_SIZE + regfile.q[Register.PLAYER_SELECT]]] = 1;
+          
+          //increment the player sequence size
+          regfile.d[Register.P1_SIZE + regfile.q[Register.PLAYER_SELECT]] = regfile.q[Register.P1_SIZE+ regfile.q[Register.PLAYER_SELECT]] + 1;
+
+          
+          
+        }
+        
+        //next state
+        regfile.d[Register.STATE] = State.CHECK_PLAYER_BUTTON_RIGHT;
+      
+        
+        
+        
+      //check player right button press
+      State.CHECK_PLAYER_BUTTON_RIGHT:
+      
+        if(buttonPressed[Button.P1_RIGHT + regfile.q[Register.PLAYER_SELECT]]){
+          buttonSeenOut[Button.P1_RIGHT + regfile.q[Register.PLAYER_SELECT]] = 1;
+          
+          //set the value in the player right sequence at the player sequence size to 1
+          regfile.d[Register.P1_RIGHT + regfile.q[Register.PLAYER_SELECT]][regfile.q[Register.P1_SIZE + regfile.q[Register.PLAYER_SELECT]]] = 1;
+          
+          //increment the player sequence size
+          regfile.d[Register.P1_SIZE + regfile.q[Register.PLAYER_SELECT]] = regfile.q[Register.P1_SIZE+ regfile.q[Register.PLAYER_SELECT]] + 1;
+
+          
+        }
+        
+        //next state
+        regfile.d[Register.STATE] = State.ALU_SEND_CHECK_PLAYER_SIZE;        
+      
+        
+                    
+        
+      //check if the player sequence size is equal to the sequence max size (8)
+      State.ALU_SEND_CHECK_PLAYER_SIZE:
+        
+        //send a CMPEQ to the ALU
+        we = 1;
+        alufn = ALUFunction.CMPEQ;
+        ra = Register.P1_SIZE+regfile.q[Register.PLAYER_SELECT];
+        bsel = Bsel.B;
+        rb = Register.CHECK_SIZE;
+        
+        //next state
+        regfile.d[Register.STATE] = State.CHECK_PLAYER_SIZE;
+        
+        
+      State.CHECK_PLAYER_SIZE:
+        
+        //if the value given is true
+        if(regfile.q[Register.ALU_OUTPUT][0]){
+          
+          //reset player size
+          regfile.d[Register.P1_SIZE + regfile.q[Register.PLAYER_SELECT]] = 0;
+                  
+          //next state
+          regfile.d[Register.STATE] = State.ALU_SEND_CHECK_PLAYER_LEFT;
+        }
+        else{
+          
+          //next state
+          regfile.d[Register.STATE] = State.GAME_LOOP_START;
+          
+        }
+        
+        
+      //check if the player left sequence equals the check left sequence
+      State.ALU_SEND_CHECK_PLAYER_LEFT:
+        
+        //send a CMPEQ to the ALU
+        we = 1;
+        alufn = ALUFunction.CMPEQ;
+        ra = Register.P1_LEFT+regfile.q[Register.PLAYER_SELECT];
+        bsel = Bsel.B;
+        rb = Register.CHECK_LEFT;
+        
+        //next state
+        regfile.d[Register.STATE] = State.CHECK_PLAYER_LEFT;
+      
+
+      //check the value of the alu output
+      
+      State.CHECK_PLAYER_LEFT:
+      
+        
+        //if the value given is true
+        if(regfile.q[Register.ALU_OUTPUT][0]){
+          
+          //next state
+          regfile.d[Register.STATE] = State.ALU_SEND_PLAYER_SCORE_BSL;
+        }
+        else{
+
+          //next state
+          regfile.d[Register.STATE] = State.GAME_LOOP_START;
+          
+        }
+        
+        //reset the player sequences
+        regfile.d[Register.P1_LEFT + regfile.q[Register.PLAYER_SELECT]] = 16b0;
+        regfile.d[Register.P1_RIGHT + regfile.q[Register.PLAYER_SELECT]] = 16b0;
+        
+        
+        
+
+      
+        
+        
+      //bit shift left the player score
+      State.ALU_SEND_PLAYER_SCORE_BSL:
+        
+        //send a BSL to the ALU to shift the current player score by one bit
+        we = 1;
+        alufn = ALUFunction.SHL;
+        ra = Register.P1_SCORE+regfile.q[Register.PLAYER_SELECT];
+        bsel = Bsel.ONE;
+        rc = Register.P1_SCORE+regfile.q[Register.PLAYER_SELECT];
+        //next state
+        regfile.d[Register.STATE] = State.ALU_SEND_PLAYER_SCORE_INCREMENT;
+        
+        
+      //increment the player score
+      State.ALU_SEND_PLAYER_SCORE_INCREMENT:
+        
+        //send a BSL to the ALU to shift the current player score by one bit
+        we = 1;
+        alufn = ALUFunction.ADD;
+        ra = Register.P1_SCORE+regfile.q[Register.PLAYER_SELECT];
+        bsel = Bsel.ONE;
+        rc = Register.P1_SCORE+regfile.q[Register.PLAYER_SELECT];
+        
+        //next state
+        regfile.d[Register.STATE] = State.CHECK_SCORE_MAX;
+        
+      
+      //check if the player has the max score
+      State.CHECK_SCORE_MAX:
+        
+        //check if the last bit of the player score is on
+        if(regfile.q[Register.P1_SCORE+regfile.q[Register.PLAYER_SELECT]][6]){
+          regfile.d[Register.STATE] = State.END_SCREEN_START;
+        }
+        else{
+          regfile.d[Register.STATE] = State.GAME_LOOP_START;
+        }
+      
+      //start the end screen
+      State.END_SCREEN_START:
+        
+        //reset the delay
+        delay.d = 0;
+        
+        //next state
+        regfile.d[Register.STATE] = State.END_SCREEN_PAUSE;
+        
+      //wait for the alu output to count up, acting as a delay
+      State.END_SCREEN_PAUSE:
+        
+        //check if the reset button has been pressed and go to game reset
+        if(buttonPressed[Button.CONTROL_RIGHT]){
+          buttonSeenOut[Button.CONTROL_RIGHT] = 1;
+          
+          regfile.d[Register.STATE] = State.GAME_SETUP;
+          
+        }
+        
+        //check if the last bit of the alu temp
+        else if(delay.q[26]){
+          regfile.d[Register.STATE] = State.END_SCREEN_FLIP;
+        }
+        else{
+          //increment the delay value by one
+          delay.d = delay.q + 1;
+          
+        }
+        
+      //flip the bits of the player score to make it flash 
+      State.END_SCREEN_FLIP:
+        
+        
+        regfile.d[Register.P1_SCORE+regfile.q[Register.PLAYER_SELECT]] = ~regfile.q[Register.P1_SCORE+regfile.q[Register.PLAYER_SELECT]];
+        
+        
+        //keep looping back to the end screen start
+        regfile.d[Register.STATE] = State.END_SCREEN_START;
+      
+    
+    }
+    
+    
+    
+    
+    //REGFILE FUNCTIONS
+
+    a = regfile.q[ra];
+    case(bsel){
+      default:
+        b = regfile.q[rb];
+      Bsel.ZERO:
+        b = 16b0;
+      Bsel.ONE:
+        b = 16b1;
+      Bsel.FULL:
+        b = 16hFFFF;
+    }
+    
+    if(we){
+      regfile.d[rc] = wd;
+    }
+    
+    regfileRead = regfile.q;
+    
+    
+    
+    
+    
+    
+  }
+}
